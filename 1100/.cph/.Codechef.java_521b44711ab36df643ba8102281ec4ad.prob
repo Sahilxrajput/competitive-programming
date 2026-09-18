@@ -1,0 +1,1 @@
+{"name":"Local: Codechef","url":"d:\\Coding\\competitive programming\\1100\\Codechef.java","tests":[{"id":1789570489072,"input":"4\n2\n2 1\n4\n4 2 3 1\n3\n1 2 3\n6\n2 4 1 6 5 3","output":"1\n5\n0\n10"}],"interactive":false,"memoryLimit":1024,"timeLimit":3000,"srcPath":"d:\\Coding\\competitive programming\\1100\\Codechef.java","group":"local","local":true}

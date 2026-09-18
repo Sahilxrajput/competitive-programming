@@ -1,0 +1,1 @@
+{"name":"Local: OddDivisor","url":"d:\\Coding\\competitive programming\\900\\OddDivisor.java","tests":[{"id":1786693270865,"input":"6\n2\n3\n4\n5\n998244353\n1099511627776\n","output":"NO\nYES\nNO\nYES\nYES\nNO\n"}],"interactive":false,"memoryLimit":1024,"timeLimit":3000,"srcPath":"d:\\Coding\\competitive programming\\900\\OddDivisor.java","group":"local","local":true}
