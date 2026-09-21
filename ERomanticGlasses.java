@@ -1,6 +1,7 @@
 import java.io.*;
+import java.util.HashSet;
 
-public class CLASS_NAME {
+public class ERomanticGlasses {
 
     static final long MOD = 1_000_000_007L;
     static final long INF = Long.MAX_VALUE / 4;
@@ -296,8 +297,36 @@ public class CLASS_NAME {
     // ==================== SOLVE ====================
 
     static void solve(FastScanner fs) throws Exception {
-        // start writing you code$CURSOR_PLACEHOLDER
+        int n = fs.nextInt();
 
+        HashSet<Long> set = new HashSet<>();
+
+        long sum = 0;
+        set.add(0L);
+
+        for (int i = 0; i < n; i++) {
+            long x = fs.nextLong();
+
+            if (i % 2 == 0) {
+                sum += x;
+            } else {
+                sum -= x;
+            }
+
+            if (set.contains(sum)) {
+                // Still need to consume remaining input
+                for (int j = i + 1; j < n; j++) {
+                    fs.nextLong();
+                }
+
+                System.out.println("YES");
+                return;
+            }
+
+            set.add(sum);
+        }
+
+        System.out.println("NO");
     }
 
     // ==================== MAIN ====================

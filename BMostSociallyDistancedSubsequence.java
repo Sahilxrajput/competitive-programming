@@ -1,6 +1,7 @@
 import java.io.*;
+import java.util.ArrayList;
 
-public class CLASS_NAME {
+public class BMostSociallyDistancedSubsequence {
 
     static final long MOD = 1_000_000_007L;
     static final long INF = Long.MAX_VALUE / 4;
@@ -296,8 +297,34 @@ public class CLASS_NAME {
     // ==================== SOLVE ====================
 
     static void solve(FastScanner fs) throws Exception {
-        // start writing you code$CURSOR_PLACEHOLDER
+        // start writing you code
+        int n = fs.nextInt();
 
+        int[] p = readArray(fs, n);
+
+        ArrayList<Integer> ans = new ArrayList<>();
+
+        ans.add(p[0]);
+
+        for (int i = 1; i < n - 1; i++) {
+
+            if ((p[i - 1] < p[i] && p[i] < p[i + 1]) ||
+                    (p[i - 1] > p[i] && p[i] > p[i + 1])) {
+                continue;
+            }
+
+            ans.add(p[i]);
+        }
+
+        ans.add(p[n - 1]);
+
+        System.out.println(ans.size());
+
+        for (int x : ans) {
+            System.out.print(x + " ");
+        }
+
+        System.out.println();
     }
 
     // ==================== MAIN ====================

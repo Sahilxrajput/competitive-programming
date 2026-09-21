@@ -1,6 +1,6 @@
 import java.io.*;
 
-public class CLASS_NAME {
+public class CSimpleStrings {
 
     static final long MOD = 1_000_000_007L;
     static final long INF = Long.MAX_VALUE / 4;
@@ -296,8 +296,28 @@ public class CLASS_NAME {
     // ==================== SOLVE ====================
 
     static void solve(FastScanner fs) throws Exception {
-        // start writing you code$CURSOR_PLACEHOLDER
+        String s = fs.next();
 
+        char[] a = s.toCharArray();
+        int n = a.length;
+
+        for (int i = 1; i < n; i++) {
+
+            if (a[i] == a[i - 1]) {
+
+                for (char c = 'a'; c <= 'z'; c++) {
+
+                    if (c != a[i - 1] &&
+                            (i + 1 == n || c != a[i + 1])) {
+
+                        a[i] = c;
+                        break;
+                    }
+                }
+            }
+        }
+
+        System.out.println(new String(a));
     }
 
     // ==================== MAIN ====================
@@ -306,7 +326,7 @@ public class CLASS_NAME {
         FastScanner fs = new FastScanner();
 
         int t = 1;
-        t = fs.nextInt();
+        // t = fs.nextInt();
 
         while (t-- > 0) {
             solve(fs);

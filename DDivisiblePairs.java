@@ -1,6 +1,6 @@
 import java.io.*;
 
-public class CLASS_NAME {
+public class DDivisiblePairs {
 
     static final long MOD = 1_000_000_007L;
     static final long INF = Long.MAX_VALUE / 4;
@@ -296,7 +296,12 @@ public class CLASS_NAME {
     // ==================== SOLVE ====================
 
     static void solve(FastScanner fs) throws Exception {
-        // start writing you code$CURSOR_PLACEHOLDER
+        // start writing you code
+        int n = fs.nextInt();
+        long x = fs.nextLong();
+        long y = fs.nextLong();
+
+        long[] a = readLongArray(fs, n);
 
     }
 

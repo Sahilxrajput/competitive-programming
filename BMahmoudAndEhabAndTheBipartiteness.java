@@ -1,6 +1,7 @@
 import java.io.*;
+import java.util.*;
 
-public class CLASS_NAME {
+public class BMahmoudAndEhabAndTheBipartiteness {
 
     static final long MOD = 1_000_000_007L;
     static final long INF = Long.MAX_VALUE / 4;
@@ -296,8 +297,51 @@ public class CLASS_NAME {
     // ==================== SOLVE ====================
 
     static void solve(FastScanner fs) throws Exception {
-        // start writing you code$CURSOR_PLACEHOLDER
+        int n = fs.nextInt();
 
+        ArrayList<Integer>[] graph = new ArrayList[n];
+
+        for (int i = 0; i < n; i++) {
+            graph[i] = new ArrayList<>();
+        }
+
+        for (int i = 0; i < n - 1; i++) {
+            int u = fs.nextInt() - 1;
+            int v = fs.nextInt() - 1;
+
+            graph[u].add(v);
+            graph[v].add(u);
+        }
+
+        int[] color = new int[n];
+        Arrays.fill(color, -1);
+
+        long[] cnt = new long[2];
+
+        // Iterative DFS
+        ArrayDeque<Integer> stack = new ArrayDeque<>();
+
+        stack.push(0);
+        color[0] = 0;
+
+        while (!stack.isEmpty()) {
+            int u = stack.pop();
+
+            cnt[color[u]]++;
+
+            for (int v : graph[u]) {
+                if (color[v] != -1) {
+                    continue;
+                }
+
+                color[v] = color[u] ^ 1;
+                stack.push(v);
+            }
+        }
+
+        long answer = cnt[0] * cnt[1] - (n - 1); // (red * black) - already present
+
+        System.out.println(answer);
     }
 
     // ==================== MAIN ====================
@@ -306,7 +350,7 @@ public class CLASS_NAME {
         FastScanner fs = new FastScanner();
 
         int t = 1;
-        t = fs.nextInt();
+        // t = fs.nextInt();
 
         while (t-- > 0) {
             solve(fs);

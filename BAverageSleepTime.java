@@ -1,6 +1,6 @@
 import java.io.*;
 
-public class CLASS_NAME {
+public class BAverageSleepTime {
 
     static final long MOD = 1_000_000_007L;
     static final long INF = Long.MAX_VALUE / 4;
@@ -296,7 +296,32 @@ public class CLASS_NAME {
     // ==================== SOLVE ====================
 
     static void solve(FastScanner fs) throws Exception {
-        // start writing you code$CURSOR_PLACEHOLDER
+        // start writing you code
+        int n = fs.nextInt();
+        int k = fs.nextInt();
+
+        int[] a = new int[n];
+
+        for (int i = 0; i < n; i++) {
+            a[i] = fs.nextInt();
+        }
+
+        long windowSum = 0;
+
+        for (int i = 0; i < k; i++) {
+            windowSum += a[i];
+        }
+
+        double total = windowSum;
+
+        for (int i = k; i < n; i++) {
+            windowSum += a[i];
+            windowSum -= a[i - k];
+
+            total += windowSum;
+        }
+
+        System.out.printf("%.10f%n", total / (n - k + 1));
 
     }
 
@@ -306,7 +331,7 @@ public class CLASS_NAME {
         FastScanner fs = new FastScanner();
 
         int t = 1;
-        t = fs.nextInt();
+        // t = fs.nextInt();
 
         while (t-- > 0) {
             solve(fs);

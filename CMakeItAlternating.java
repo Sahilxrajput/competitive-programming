@@ -1,8 +1,8 @@
 import java.io.*;
 
-public class CLASS_NAME {
+public class CMakeItAlternating {
 
-    static final long MOD = 1_000_000_007L;
+    static final long MOD = 998244353;
     static final long INF = Long.MAX_VALUE / 4;
 
     // ==================== FAST SCANNER ====================
@@ -296,8 +296,38 @@ public class CLASS_NAME {
     // ==================== SOLVE ====================
 
     static void solve(FastScanner fs) throws Exception {
-        // start writing you code$CURSOR_PLACEHOLDER
+        String s = fs.next();
+        int n = s.length();
 
+        long ways = 1;
+        int deletions = 0;
+
+        for (int i = 0; i < n;) {
+
+            int j = i;
+
+            // Find length of current group
+            while (j < n && s.charAt(j) == s.charAt(i)) {
+                j++;
+            }
+
+            int len = j - i;
+
+            // Delete len - 1 characters
+            deletions += len - 1;
+
+            // Choose which character survives
+            ways = ways * len % MOD;
+
+            i = j;
+        }
+
+        // Arrange all deletions in any order
+        for (int i = 1; i <= deletions; i++) {
+            ways = ways * i % MOD;
+        }
+
+        System.out.println(deletions + " " + ways);
     }
 
     // ==================== MAIN ====================

@@ -1,6 +1,6 @@
 import java.io.*;
 
-public class CLASS_NAME {
+public class BMoveAndTurn {
 
     static final long MOD = 1_000_000_007L;
     static final long INF = Long.MAX_VALUE / 4;
@@ -296,8 +296,19 @@ public class CLASS_NAME {
     // ==================== SOLVE ====================
 
     static void solve(FastScanner fs) throws Exception {
-        // start writing you code$CURSOR_PLACEHOLDER
+        // start writing you code
+        int n = fs.nextInt();
 
+        long ans;
+        long k = n / 2;
+
+        if (n % 2 == 0) {
+            ans = (k + 1) * (k + 1);
+        } else {
+            ans = 2L * (k + 1) * (k + 2);
+        }
+
+        System.out.println(ans);
     }
 
     // ==================== MAIN ====================
@@ -306,7 +317,7 @@ public class CLASS_NAME {
         FastScanner fs = new FastScanner();
 
         int t = 1;
-        t = fs.nextInt();
+        // t = fs.nextInt();
 
         while (t-- > 0) {
             solve(fs);

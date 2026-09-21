@@ -1,6 +1,6 @@
 import java.io.*;
 
-public class CLASS_NAME {
+public class BBalancedTunnel {
 
     static final long MOD = 1_000_000_007L;
     static final long INF = Long.MAX_VALUE / 4;
@@ -297,7 +297,32 @@ public class CLASS_NAME {
 
     static void solve(FastScanner fs) throws Exception {
         // start writing you code$CURSOR_PLACEHOLDER
+        int n = fs.nextInt();
 
+        int[] enter = readArray(fs, n);
+        int[] exit = readArray(fs, n);
+
+        int[] pos = new int[n + 1];
+
+        for (int i = 0; i < n; i++) {
+            pos[exit[i]] = i;
+        }
+
+        int ans = 0;
+        int maxExit = -1;
+
+        for (int i = 0; i < n; i++) {
+            int car = enter[i];
+            int exitPos = pos[car];
+
+            if (exitPos < maxExit) {
+                ans++;
+            } else {
+                maxExit = exitPos;
+            }
+        }
+
+        System.out.println(ans);
     }
 
     // ==================== MAIN ====================
@@ -306,7 +331,7 @@ public class CLASS_NAME {
         FastScanner fs = new FastScanner();
 
         int t = 1;
-        t = fs.nextInt();
+        // t = fs.nextInt();
 
         while (t-- > 0) {
             solve(fs);

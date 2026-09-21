@@ -1,6 +1,7 @@
 import java.io.*;
+import java.util.*;
 
-public class CLASS_NAME {
+public class DDivideAndEqualize {
 
     static final long MOD = 1_000_000_007L;
     static final long INF = Long.MAX_VALUE / 4;
@@ -296,8 +297,32 @@ public class CLASS_NAME {
     // ==================== SOLVE ====================
 
     static void solve(FastScanner fs) throws Exception {
-        // start writing you code$CURSOR_PLACEHOLDER
+        int n = fs.nextInt();
 
+        Map<Integer, Integer> mp = new HashMap<>();
+
+        for (int i = 0; i < n; i++) {
+            int x = fs.nextInt();
+        
+            for (int j = 2; j * j <= x; j++) {
+                while (x % j == 0) {
+                    mp.put(j, mp.getOrDefault(j, 0) + 1);
+                    x /= j;
+                }
+            }
+            if (x > 1) {
+                mp.put(x, mp.getOrDefault(x, 0) + 1);
+            }
+        }
+
+        for (Map.Entry<Integer, Integer> entry : mp.entrySet()) {
+            if (entry.getValue() % n != 0) {
+                System.out.println("NO");
+                return;
+            }
+        }
+
+        System.out.println("YES");
     }
 
     // ==================== MAIN ====================

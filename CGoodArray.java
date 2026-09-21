@@ -1,6 +1,9 @@
 import java.io.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.HashSet;
 
-public class CLASS_NAME {
+public class CGoodArray {
 
     static final long MOD = 1_000_000_007L;
     static final long INF = Long.MAX_VALUE / 4;
@@ -296,8 +299,50 @@ public class CLASS_NAME {
     // ==================== SOLVE ====================
 
     static void solve(FastScanner fs) throws Exception {
-        // start writing you code$CURSOR_PLACEHOLDER
+        int n = fs.nextInt();
 
+        int[] a = new int[n];
+
+        long total = 0L;
+
+        HashMap<Integer, Integer> freq = new HashMap<>();
+
+        for (int i = 0; i < n; i++) {
+            a[i] = fs.nextInt();
+
+            total += a[i];
+
+            freq.put(a[i], freq.getOrDefault(a[i], 0) + 1);
+        }
+
+        ArrayList<Integer> ans = new ArrayList<>();
+
+        for (int i = 0; i < n; i++) {
+            long sum = total - a[i];
+
+            if (sum % 2 != 0) {
+                continue;
+            }
+
+            long target = sum / 2;
+
+            int occurrences = freq.getOrDefault((int) target, 0);
+
+            if (target == a[i]) {
+                occurrences--;
+            }
+
+            if (occurrences > 0) {
+                ans.add(i + 1);
+            }
+        }
+
+        System.out.println(ans.size());
+
+        for (int answer : ans) {
+            System.out.print(answer + " ");
+        }
+      
     }
 
     // ==================== MAIN ====================
@@ -306,7 +351,7 @@ public class CLASS_NAME {
         FastScanner fs = new FastScanner();
 
         int t = 1;
-        t = fs.nextInt();
+        // t = fs.nextInt();
 
         while (t-- > 0) {
             solve(fs);

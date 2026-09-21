@@ -1,6 +1,6 @@
 import java.io.*;
 
-public class CLASS_NAME {
+public class HMaximalAnd {
 
     static final long MOD = 1_000_000_007L;
     static final long INF = Long.MAX_VALUE / 4;
@@ -296,7 +296,33 @@ public class CLASS_NAME {
     // ==================== SOLVE ====================
 
     static void solve(FastScanner fs) throws Exception {
-        // start writing you code$CURSOR_PLACEHOLDER
+        // start writing you code
+        int n = fs.nextInt();
+        int k = fs.nextInt();
+
+        int[] bits = new int[32];
+        int[] a = new int[n];
+
+        int ans = (1 << 31) - 1;
+
+        for (int i = 0; i < n; i++) {
+            a[i] = fs.nextInt();
+            ans &= a[i];
+            for (int j = 0; j < 32; j++) {
+                if ((a[i] & (1 << j)) != 0) {
+                    bits[j]++;
+                }
+            }
+        }
+
+        for (int i = 30; i >= 0; i--) { 
+            if (k >= n - bits[i]) {
+                ans |= (1 << i); 
+                k -= (n - bits[i]);
+            }
+        }
+
+        System.out.println(ans);
 
     }
 

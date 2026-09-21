@@ -1,6 +1,6 @@
 import java.io.*;
 
-public class CLASS_NAME {
+public class BWowFactor {
 
     static final long MOD = 1_000_000_007L;
     static final long INF = Long.MAX_VALUE / 4;
@@ -296,7 +296,15 @@ public class CLASS_NAME {
     // ==================== SOLVE ====================
 
     static void solve(FastScanner fs) throws Exception {
-        // start writing you code$CURSOR_PLACEHOLDER
+        // start writing you code
+        String s = fs.next();
+        int n = s.length();
+
+        int[][] dp = new int[n][3];
+
+        // for dp[i][2] = dp[i-1][2] + 1; wow
+        // for dp[i][1] = dp[i-1][1] + 1; wo
+        // for dp[i][0] = dp[i-1][0] + 1; w
 
     }
 
@@ -306,7 +314,7 @@ public class CLASS_NAME {
         FastScanner fs = new FastScanner();
 
         int t = 1;
-        t = fs.nextInt();
+        // t = fs.nextInt();
 
         while (t-- > 0) {
             solve(fs);
