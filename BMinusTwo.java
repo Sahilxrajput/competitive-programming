@@ -1,7 +1,7 @@
 import java.io.*;
-import java.util.*;
+import java.util.HashMap;
 
-public class BMostSociallyDistancedSubsequence {
+public class BMinusTwo {
 
     static final long MOD = 1_000_000_007L;
     static final long INF = Long.MAX_VALUE / 4;
@@ -299,25 +299,25 @@ public class BMostSociallyDistancedSubsequence {
     static void solve(FastScanner fs) throws Exception {
         // start writing you code
         int n = fs.nextInt();
-        int k = fs.nextInt();
-        String s = fs.next();
 
-        int ans=n/k;
+        int odd = 0;
+        int even0 = 0; // x % 4 == 0
+        int even2 = 0; // x % 4 == 2
 
-        int j =0;
-        int mul=1;
 
-        for(int i=0; i<n; ++i){
-            if(j < mul * (k-1)){
-                if(s.charAt(j)=='0') ans--;
-                mul++;
-                j = mul * k;
+        for (int i = 0; i < n; i++) {
+            int x = fs.nextInt();
+
+            if ((x & 1) == 1) {
+                odd++;
+            } else if (x % 4 == 0) {
+                even0++;
             } else {
-                j++;
+                even2++;
             }
         }
 
-        System.out.println(ans);
+        System.out.println(Math.max(odd, Math.max(even0, even2)));
     }
 
     // ==================== MAIN ====================

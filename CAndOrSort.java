@@ -1,7 +1,6 @@
 import java.io.*;
-import java.util.*;
 
-public class BMostSociallyDistancedSubsequence {
+public class CAndOrSort {
 
     static final long MOD = 1_000_000_007L;
     static final long INF = Long.MAX_VALUE / 4;
@@ -297,24 +296,48 @@ public class BMostSociallyDistancedSubsequence {
     // ==================== SOLVE ====================
 
     static void solve(FastScanner fs) throws Exception {
-        // start writing you code
         int n = fs.nextInt();
-        int k = fs.nextInt();
         String s = fs.next();
 
-        int ans=n/k;
+        if (s.charAt(0) == '1') {
+            int zeros = 0;
 
-        int j =0;
-        int mul=1;
-
-        for(int i=0; i<n; ++i){
-            if(j < mul * (k-1)){
-                if(s.charAt(j)=='0') ans--;
-                mul++;
-                j = mul * k;
-            } else {
-                j++;
+            for (char ch : s.toCharArray()) {
+                if (ch == '0') {
+                    zeros++;
+                }
             }
+
+            System.out.println(zeros);
+            return;
+        }
+
+        int totalZeros = 0;
+
+        for (char ch : s.toCharArray()) {
+            if (ch == '0') {
+                totalZeros++;
+            }
+        }
+
+        int onesPrefix = 0;
+        int zerosPrefix = 0;
+
+        int ans = Integer.MAX_VALUE;
+
+        for (int i = 0; i < n; i++) {
+
+            if (s.charAt(i) == '1') {
+                onesPrefix++;
+            } else {
+                zerosPrefix++;
+            }
+
+            int zerosSuffix = totalZeros - zerosPrefix;
+
+            int cost = onesPrefix + zerosSuffix;
+
+            ans = Math.min(ans, cost);
         }
 
         System.out.println(ans);

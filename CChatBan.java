@@ -1,7 +1,6 @@
 import java.io.*;
-import java.util.*;
 
-public class BMostSociallyDistancedSubsequence {
+public class CChatBan {
 
     static final long MOD = 1_000_000_007L;
     static final long INF = Long.MAX_VALUE / 4;
@@ -296,28 +295,47 @@ public class BMostSociallyDistancedSubsequence {
 
     // ==================== SOLVE ====================
 
+    static boolean check(long m, long k, long x) {
+
+        long sum;
+
+        if (m <= k) {
+            // 1 + 2 + ... + m
+            sum = m * (m + 1) / 2;
+        } else {
+            // First k messages
+            sum = k * (k + 1) / 2;
+
+            // Remaining m-k messages
+            long cnt = m - k;
+            long last = k - cnt;
+
+            sum += cnt * ((k - 1) + last) / 2;
+        }
+
+        return sum >= x;
+    }
+
     static void solve(FastScanner fs) throws Exception {
-        // start writing you code
-        int n = fs.nextInt();
-        int k = fs.nextInt();
-        String s = fs.next();
 
-        int ans=n/k;
+        long k = fs.nextLong();
+        long x = fs.nextLong();
 
-        int j =0;
-        int mul=1;
+        long lo = 1;
+        long hi = 2 * k - 1;
 
-        for(int i=0; i<n; ++i){
-            if(j < mul * (k-1)){
-                if(s.charAt(j)=='0') ans--;
-                mul++;
-                j = mul * k;
+        while (lo < hi) {
+
+            long mid = lo + (hi - lo) / 2;
+
+            if (check(mid, k, x)) {
+                hi = mid;
             } else {
-                j++;
+                lo = mid + 1;
             }
         }
 
-        System.out.println(ans);
+        System.out.println(lo);
     }
 
     // ==================== MAIN ====================

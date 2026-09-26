@@ -1,7 +1,7 @@
 import java.io.*;
 import java.util.*;
 
-public class BMostSociallyDistancedSubsequence {
+public class CVirus {
 
     static final long MOD = 1_000_000_007L;
     static final long INF = Long.MAX_VALUE / 4;
@@ -299,25 +299,47 @@ public class BMostSociallyDistancedSubsequence {
     static void solve(FastScanner fs) throws Exception {
         // start writing you code
         int n = fs.nextInt();
-        int k = fs.nextInt();
-        String s = fs.next();
+        int m = fs.nextInt();
 
-        int ans=n/k;
+        int[] a = readArray(fs, m);
+        Arrays.sort(a);
 
-        int j =0;
-        int mul=1;
+        int[] gaps = new int[m];
 
-        for(int i=0; i<n; ++i){
-            if(j < mul * (k-1)){
-                if(s.charAt(j)=='0') ans--;
-                mul++;
-                j = mul * k;
-            } else {
-                j++;
-            }
+        // Normal gaps
+        for (int i = 0; i < m - 1; i++) {
+            gaps[i] = a[i + 1] - a[i] - 1;
         }
 
-        System.out.println(ans);
+        // Circular gap
+        gaps[m - 1] = n - a[m - 1] + a[0] - 1;
+
+        // Largest gaps first
+        Arrays.sort(gaps);
+
+        int days = 0;
+        int saved = 0;
+
+        for (int i = m - 1; i >= 0; i--) {
+
+            int gap = gaps[i];
+
+            int remaining = gap - 2 * days;
+
+            if (remaining <= 0) {
+                continue;
+            }
+
+            if (remaining == 1) {
+                saved += 1;
+            } else {
+                saved += remaining - 1;
+            }
+
+            days += 2;
+        }
+
+        System.out.println(n - saved);
     }
 
     // ==================== MAIN ====================

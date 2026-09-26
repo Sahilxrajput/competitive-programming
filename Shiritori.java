@@ -1,7 +1,7 @@
 import java.io.*;
 import java.util.*;
 
-public class BMostSociallyDistancedSubsequence {
+public class Shiritori {
 
     static final long MOD = 1_000_000_007L;
     static final long INF = Long.MAX_VALUE / 4;
@@ -18,14 +18,18 @@ public class BMostSociallyDistancedSubsequence {
             if (ptr >= len) {
                 len = in.read(buffer);
                 ptr = 0;
-                if (len <= 0)
+
+                if (len <= 0) {
                     return -1;
+                }
             }
+
             return buffer[ptr++];
         }
 
         String next() throws IOException {
             StringBuilder sb = new StringBuilder();
+
             int c;
 
             do {
@@ -105,6 +109,7 @@ public class BMostSociallyDistancedSubsequence {
             a = b;
             b = temp;
         }
+
         return a;
     }
 
@@ -129,6 +134,7 @@ public class BMostSociallyDistancedSubsequence {
 
     static long modPow(long a, long b) {
         long result = 1;
+
         a %= MOD;
 
         while (b > 0) {
@@ -152,14 +158,18 @@ public class BMostSociallyDistancedSubsequence {
     }
 
     static boolean isPrime(long n) {
-        if (n < 2)
+        if (n < 2) {
             return false;
-        if (n % 2 == 0)
+        }
+
+        if (n % 2 == 0) {
             return n == 2;
+        }
 
         for (long i = 3; i * i <= n; i += 2) {
-            if (n % i == 0)
+            if (n % i == 0) {
                 return false;
+            }
         }
 
         return true;
@@ -187,7 +197,6 @@ public class BMostSociallyDistancedSubsequence {
 
     // ==================== BINARY SEARCH ====================
 
-    // First index where arr[index] >= target
     static int lowerBound(int[] arr, int target) {
         int l = 0;
         int r = arr.length;
@@ -205,7 +214,6 @@ public class BMostSociallyDistancedSubsequence {
         return l;
     }
 
-    // First index where arr[index] > target
     static int upperBound(int[] arr, int target) {
         int l = 0;
         int r = arr.length;
@@ -294,39 +302,195 @@ public class BMostSociallyDistancedSubsequence {
         System.out.println(sb);
     }
 
+    // ==================== BUILD GRAPH ====================
+
+    static ArrayList<ArrayList<Integer>> build(
+            ArrayList<String> list,
+            HashMap<String, Integer> map) {
+
+        ArrayList<ArrayList<Integer>> adj = new ArrayList<>();
+
+        for (String s : list) {
+
+            String from = s.substring(0, 3);
+            String to = s.substring(s.length() - 3);
+
+            if (!map.containsKey(from)) {
+                map.put(from, map.size());
+                adj.add(new ArrayList<>());
+            }
+
+            if (!map.containsKey(to)) {
+                map.put(to, map.size());
+                adj.add(new ArrayList<>());
+            }
+
+            int u = map.get(from);
+            int v = map.get(to);
+
+            adj.get(u).add(v);
+        }
+
+        return adj;
+    }
+
     // ==================== SOLVE ====================
 
     static void solve(FastScanner fs) throws Exception {
-        // start writing you code
+
         int n = fs.nextInt();
-        int k = fs.nextInt();
-        String s = fs.next();
 
-        int ans=n/k;
+        ArrayList<String> list = new ArrayList<>();
 
-        int j =0;
-        int mul=1;
+        for (int i = 0; i < n; i++) {
+            list.add(fs.next());
+        }
 
-        for(int i=0; i<n; ++i){
-            if(j < mul * (k-1)){
-                if(s.charAt(j)=='0') ans--;
-                mul++;
-                j = mul * k;
-            } else {
-                j++;
+        HashMap<String, Integer> map = new HashMap<>();
+
+        ArrayList<ArrayList<Integer>> adj = build(list, map);
+
+        int nodes = adj.size();
+
+        /*
+         * state:
+         *
+         * 0 = Unknown / Draw
+         * 1 = Winning
+         * 2 = Losing
+         */
+
+        int[] state = new int[nodes];
+
+        /*
+         * outDegree[u] =
+         * number of possible moves from u.
+         */
+        int[] outDegree = new int[nodes];
+
+        /*
+         * Reverse graph.
+         *
+         * If:
+         *
+         * u -> v
+         *
+         * then:
+         *
+         * reverse[v] contains u.
+         */
+
+        ArrayList<ArrayList<Integer>> reverse = new ArrayList<>();
+
+        for (int i = 0; i < nodes; i++) {
+            reverse.add(new ArrayList<>());
+        }
+
+        for (int u = 0; u < nodes; u++) {
+
+            outDegree[u] = adj.get(u).size();
+
+            for (int v : adj.get(u)) {
+                reverse.get(v).add(u);
             }
         }
 
-        System.out.println(ans);
+        /*
+         * Queue for reverse BFS.
+         *
+         * A state with no possible move is losing.
+         */
+        ArrayDeque<Integer> queue = new ArrayDeque<>();
+
+        for (int i = 0; i < nodes; i++) {
+
+            if (outDegree[i] == 0) {
+                state[i] = 2; // Losing
+                queue.add(i);
+            }
+        }
+
+        /*
+         * Retrograde analysis.
+         */
+        while (!queue.isEmpty()) {
+
+            int cur = queue.poll();
+
+            for (int prev : reverse.get(cur)) {
+
+                /*
+                 * Already classified.
+                 */
+                if (state[prev] != 0) {
+                    continue;
+                }
+
+                /*
+                 * If we can move from prev to a
+                 * losing state, prev is winning.
+                 */
+                if (state[cur] == 2) {
+
+                    state[prev] = 1; // Winning
+                    queue.add(prev);
+
+                } else {
+
+                    /*
+                     * cur is winning.
+                     *
+                     * Remove this winning option.
+                     *
+                     * If all moves from prev lead
+                     * to winning states, prev loses.
+                     */
+                    outDegree[prev]--;
+
+                    if (outDegree[prev] == 0) {
+
+                        state[prev] = 2; // Losing
+                        queue.add(prev);
+                    }
+                }
+            }
+        }
+
+        /*
+         * For every original word:
+         *
+         * Takahashi has already spoken the word.
+         * Therefore Aoki is now at the state
+         * represented by the last 3 characters.
+         */
+
+        StringBuilder ans = new StringBuilder();
+
+        for (String s : list) {
+
+            String last = s.substring(s.length() - 3);
+
+            int node = map.get(last);
+
+            switch (state[node]) {
+                case 2 -> ans.append("Takahashi\n");
+                case 1 -> ans.append("Aoki\n");
+                default -> ans.append("Draw\n");
+            }
+        }
+
+        System.out.print(ans);
     }
 
     // ==================== MAIN ====================
 
     public static void main(String[] args) throws Exception {
+
         FastScanner fs = new FastScanner();
 
         int t = 1;
-        t = fs.nextInt();
+
+        // t = fs.nextInt();
 
         while (t-- > 0) {
             solve(fs);

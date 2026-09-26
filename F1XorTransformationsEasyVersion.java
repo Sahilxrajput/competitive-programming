@@ -1,7 +1,7 @@
 import java.io.*;
 import java.util.*;
 
-public class BMostSociallyDistancedSubsequence {
+public class F1XorTransformationsEasyVersion {
 
     static final long MOD = 1_000_000_007L;
     static final long INF = Long.MAX_VALUE / 4;
@@ -297,27 +297,16 @@ public class BMostSociallyDistancedSubsequence {
     // ==================== SOLVE ====================
 
     static void solve(FastScanner fs) throws Exception {
-        // start writing you code
         int n = fs.nextInt();
-        int k = fs.nextInt();
-        String s = fs.next();
+        int q = fs.nextInt();
 
-        int ans=n/k;
+        long[] a = readLongArray(fs, n);
 
-        int j =0;
-        int mul=1;
+        while (q-- > 0) {
+            long x = fs.nextLong();
 
-        for(int i=0; i<n; ++i){
-            if(j < mul * (k-1)){
-                if(s.charAt(j)=='0') ans--;
-                mul++;
-                j = mul * k;
-            } else {
-                j++;
-            }
         }
 
-        System.out.println(ans);
     }
 
     // ==================== MAIN ====================
@@ -326,6 +315,7 @@ public class BMostSociallyDistancedSubsequence {
         FastScanner fs = new FastScanner();
 
         int t = 1;
+        ;
         t = fs.nextInt();
 
         while (t-- > 0) {

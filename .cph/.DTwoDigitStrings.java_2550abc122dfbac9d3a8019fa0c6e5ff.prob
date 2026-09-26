@@ -1,0 +1,1 @@
+{"name":"Local: DTwoDigitStrings","url":"d:\\Coding\\competitive programming\\DTwoDigitStrings.java","tests":[{"id":1790340199752,"input":"3\n5147\n44441\n2194\n5602\n123450\n012345\n","output":"2\n-1\n5\n"}],"interactive":false,"memoryLimit":1024,"timeLimit":3000,"srcPath":"d:\\Coding\\competitive programming\\DTwoDigitStrings.java","group":"local","local":true}

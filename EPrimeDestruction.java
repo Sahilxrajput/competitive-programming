@@ -1,7 +1,6 @@
 import java.io.*;
-import java.util.*;
 
-public class BMostSociallyDistancedSubsequence {
+public class EPrimeDestruction {
 
     static final long MOD = 1_000_000_007L;
     static final long INF = Long.MAX_VALUE / 4;
@@ -297,27 +296,79 @@ public class BMostSociallyDistancedSubsequence {
     // ==================== SOLVE ====================
 
     static void solve(FastScanner fs) throws Exception {
-        // start writing you code
+
         int n = fs.nextInt();
         int k = fs.nextInt();
-        String s = fs.next();
 
-        int ans=n/k;
+        int[] a = new int[n];
 
-        int j =0;
-        int mul=1;
+        int max = 0;
 
-        for(int i=0; i<n; ++i){
-            if(j < mul * (k-1)){
-                if(s.charAt(j)=='0') ans--;
-                mul++;
-                j = mul * k;
-            } else {
-                j++;
+        for (int i = 0; i < n; i++) {
+            a[i] = fs.nextInt();
+            max = Math.max(max, a[i]);
+        }
+
+        
+        int[] spf = new int[max + 1];
+
+        for (int i = 2; i <= max; i++) {
+            if (spf[i] == 0) {
+                spf[i] = i;
+
+                if ((long) i * i <= max) {
+                    for (int j = i * i; j <= max; j += i) {
+                        if (spf[j] == 0) {
+                            spf[j] = i;
+                        }
+                    }
+                }
             }
         }
 
-        System.out.println(ans);
+        /*
+         * dp[x] = minimum operations needed
+         * to make all resulting values <= k.
+         *
+         * dp[x] = 0 for x <= k
+         *
+         * Otherwise:
+         * dp[x] = min(1 + p * dp[x / p])
+         * over prime divisors p of x.
+         */
+        long[] dp = new long[max + 1];
+
+        for (int x = k + 1; x <= max; x++) {
+
+            long best = Long.MAX_VALUE;
+
+            int y = x;
+
+            while (y > 1) {
+                int p = spf[y];
+
+                long candidate = 1L + (long) p * dp[x / p];
+
+                best = Math.min(best, candidate);
+
+                /*
+                 * We only need each DISTINCT prime divisor.
+                 */
+                while (y % p == 0) {
+                    y /= p;
+                }
+            }
+
+            dp[x] = best;
+        }
+
+        long answer = 0;
+
+        for (int x : a) {
+            answer += dp[x];
+        }
+
+        System.out.println(answer);
     }
 
     // ==================== MAIN ====================

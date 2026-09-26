@@ -1,7 +1,6 @@
 import java.io.*;
-import java.util.*;
 
-public class BMostSociallyDistancedSubsequence {
+public class BThreePiles {
 
     static final long MOD = 1_000_000_007L;
     static final long INF = Long.MAX_VALUE / 4;
@@ -297,24 +296,18 @@ public class BMostSociallyDistancedSubsequence {
     // ==================== SOLVE ====================
 
     static void solve(FastScanner fs) throws Exception {
-        // start writing you code
-        int n = fs.nextInt();
-        int k = fs.nextInt();
-        String s = fs.next();
+        long a = fs.nextLong();
+        long b = fs.nextLong();
+        long c = fs.nextLong();
 
-        int ans=n/k;
+        long diff = Math.abs(a - b);
 
-        int j =0;
-        int mul=1;
+        long ans;
 
-        for(int i=0; i<n; ++i){
-            if(j < mul * (k-1)){
-                if(s.charAt(j)=='0') ans--;
-                mul++;
-                j = mul * k;
-            } else {
-                j++;
-            }
+        if (a >= b) {
+            ans = diff + c;
+        } else {
+            ans = Math.max(diff, Math.abs(diff - c));
         }
 
         System.out.println(ans);

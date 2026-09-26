@@ -1,7 +1,8 @@
 import java.io.*;
-import java.util.*;
+import java.util.HashSet;
+import java.util.Set;
 
-public class BMostSociallyDistancedSubsequence {
+public class DFallingConcrete {
 
     static final long MOD = 1_000_000_007L;
     static final long INF = Long.MAX_VALUE / 4;
@@ -297,23 +298,38 @@ public class BMostSociallyDistancedSubsequence {
     // ==================== SOLVE ====================
 
     static void solve(FastScanner fs) throws Exception {
-        // start writing you code
         int n = fs.nextInt();
-        int k = fs.nextInt();
-        String s = fs.next();
 
-        int ans=n/k;
+        long[] b = new long[n];
 
-        int j =0;
-        int mul=1;
+        for (int i = 0; i < n; i++) {
+            long a = fs.nextLong();
 
-        for(int i=0; i<n; ++i){
-            if(j < mul * (k-1)){
-                if(s.charAt(j)=='0') ans--;
-                mul++;
-                j = mul * k;
-            } else {
-                j++;
+            // 1-based index
+            b[i] = a - (i + 1L);
+        }
+
+        Set<Long> set = new HashSet<>();
+
+        for (long x : b) {
+            set.add(x);
+        }
+
+        int ans = 0;
+        for (long x : set) {
+
+            // x is the beginning of a sequence
+            if (!set.contains(x - 1)) {
+
+                long cur = x;
+                int len = 0;
+
+                while (set.contains(cur)) {
+                    len++;
+                    cur++;
+                }
+
+                ans = Math.max(ans, len);
             }
         }
 

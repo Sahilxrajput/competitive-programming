@@ -1,7 +1,6 @@
 import java.io.*;
-import java.util.*;
 
-public class BMostSociallyDistancedSubsequence {
+public class AGoodContest {
 
     static final long MOD = 1_000_000_007L;
     static final long INF = Long.MAX_VALUE / 4;
@@ -297,27 +296,15 @@ public class BMostSociallyDistancedSubsequence {
     // ==================== SOLVE ====================
 
     static void solve(FastScanner fs) throws Exception {
-        // start writing you code
         int n = fs.nextInt();
-        int k = fs.nextInt();
-        String s = fs.next();
 
-        int ans=n/k;
+        int a = fs.nextInt();
+        int b = fs.nextInt();
+        int c = fs.nextInt();
 
-        int j =0;
-        int mul=1;
+        int allThree = Math.min(a, Math.min(b, c));
 
-        for(int i=0; i<n; ++i){
-            if(j < mul * (k-1)){
-                if(s.charAt(j)=='0') ans--;
-                mul++;
-                j = mul * k;
-            } else {
-                j++;
-            }
-        }
-
-        System.out.println(ans);
+        System.out.println(n - allThree);
     }
 
     // ==================== MAIN ====================

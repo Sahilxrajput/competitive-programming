@@ -1,7 +1,7 @@
 import java.io.*;
 import java.util.*;
 
-public class BMostSociallyDistancedSubsequence {
+public class BFashionableArray {
 
     static final long MOD = 1_000_000_007L;
     static final long INF = Long.MAX_VALUE / 4;
@@ -297,27 +297,48 @@ public class BMostSociallyDistancedSubsequence {
     // ==================== SOLVE ====================
 
     static void solve(FastScanner fs) throws Exception {
-        // start writing you code
         int n = fs.nextInt();
-        int k = fs.nextInt();
-        String s = fs.next();
 
-        int ans=n/k;
+        int[] freq = new int[101];
+        int[] used = new int[101];
 
-        int j =0;
-        int mul=1;
-
-        for(int i=0; i<n; ++i){
-            if(j < mul * (k-1)){
-                if(s.charAt(j)=='0') ans--;
-                mul++;
-                j = mul * k;
-            } else {
-                j++;
-            }
+        for (int i = 0; i < n; i++) {
+            freq[fs.nextInt()]++;
         }
 
-        System.out.println(ans);
+        int maxFreq = 0;
+
+        for (int i = 0; i < n; i++) {
+
+            int choose = -1;
+
+            // Try to keep the current maximum frequency unchanged.
+            // Pick the largest possible value.
+            for (int x = 100; x >= 1; x--) {
+                if (used[x] < freq[x] && used[x] + 1 <= maxFreq) {
+                    choose = x;
+                    break;
+                }
+            }
+
+            // No value can be added without increasing the maximum frequency.
+            // Pick the largest available value.
+            if (choose == -1) {
+                for (int x = 100; x >= 1; x--) {
+                    if (used[x] < freq[x]) {
+                        choose = x;
+                        break;
+                    }
+                }
+            }
+
+            used[choose]++;
+            maxFreq = Math.max(maxFreq, used[choose]);
+
+            System.out.print(choose + " ");
+        }
+
+        System.out.println();
     }
 
     // ==================== MAIN ====================

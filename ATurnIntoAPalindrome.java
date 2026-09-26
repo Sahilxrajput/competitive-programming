@@ -1,7 +1,6 @@
 import java.io.*;
-import java.util.*;
 
-public class BMostSociallyDistancedSubsequence {
+public class ATurnIntoAPalindrome {
 
     static final long MOD = 1_000_000_007L;
     static final long INF = Long.MAX_VALUE / 4;
@@ -297,26 +296,17 @@ public class BMostSociallyDistancedSubsequence {
     // ==================== SOLVE ====================
 
     static void solve(FastScanner fs) throws Exception {
-        // start writing you code
         int n = fs.nextInt();
-        int k = fs.nextInt();
+        char ch = fs.nextChar();
         String s = fs.next();
 
-        int ans=n/k;
-
-        int j =0;
-        int mul=1;
-
-        for(int i=0; i<n; ++i){
-            if(j < mul * (k-1)){
-                if(s.charAt(j)=='0') ans--;
-                mul++;
-                j = mul * k;
-            } else {
-                j++;
+        int ans =0;
+        for(int i=0; i<n/2; ++i){
+            if(s.charAt(i) != s.charAt(n-i-1)){
+                if((s.charAt(i) == ch )|| (s.charAt(n-i-1) == ch))ans++;
+                else ans+=2;
             }
         }
-
         System.out.println(ans);
     }
 

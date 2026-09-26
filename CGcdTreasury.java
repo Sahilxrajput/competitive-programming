@@ -1,7 +1,7 @@
 import java.io.*;
 import java.util.*;
 
-public class BMostSociallyDistancedSubsequence {
+public class CGcdTreasury {
 
     static final long MOD = 1_000_000_007L;
     static final long INF = Long.MAX_VALUE / 4;
@@ -297,27 +297,29 @@ public class BMostSociallyDistancedSubsequence {
     // ==================== SOLVE ====================
 
     static void solve(FastScanner fs) throws Exception {
-        // start writing you code
         int n = fs.nextInt();
-        int k = fs.nextInt();
-        String s = fs.next();
+        int x = fs.nextInt();
 
-        int ans=n/k;
+        long[] a = new long[n];
 
-        int j =0;
-        int mul=1;
+        long answer = 0;
 
-        for(int i=0; i<n; ++i){
-            if(j < mul * (k-1)){
-                if(s.charAt(j)=='0') ans--;
-                mul++;
-                j = mul * k;
-            } else {
-                j++;
-            }
+        for (int i = 0; i < n; i++) {
+            a[i] = fs.nextLong();
         }
 
-        System.out.println(ans);
+        HashMap<Long, Long> map = new HashMap<>();
+
+        for(int i=0; i<n; ++i){
+            long g = gcd(x, a[i]);
+            map.put(g, gcd.getOrDefault(g, 0)+g);
+        }
+
+        if (x == 1) {
+            System.out.println(0);
+            return;
+        }
+
     }
 
     // ==================== MAIN ====================

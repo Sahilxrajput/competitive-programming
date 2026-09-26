@@ -1,7 +1,6 @@
 import java.io.*;
-import java.util.*;
 
-public class BMostSociallyDistancedSubsequence {
+public class C101 {
 
     static final long MOD = 1_000_000_007L;
     static final long INF = Long.MAX_VALUE / 4;
@@ -297,29 +296,45 @@ public class BMostSociallyDistancedSubsequence {
     // ==================== SOLVE ====================
 
     static void solve(FastScanner fs) throws Exception {
-        // start writing you code
-        int n = fs.nextInt();
-        int k = fs.nextInt();
-        String s = fs.next();
+    int n = fs.nextInt();
+    int[] a = readArray(fs, n);
 
-        int ans=n/k;
+    int firstOne = -1;
+    int lastOne = -1;
 
-        int j =0;
-        int mul=1;
-
-        for(int i=0; i<n; ++i){
-            if(j < mul * (k-1)){
-                if(s.charAt(j)=='0') ans--;
-                mul++;
-                j = mul * k;
-            } else {
-                j++;
+    // Find first and last fixed 1
+    for (int i = 0; i < n; i++) {
+        if (a[i] == 1) {
+            if (firstOne == -1) {
+                firstOne = i;
             }
+            lastOne = i;
         }
-
-        System.out.println(ans);
     }
 
+    // If there are fixed 1s,
+    // make everything between them 0.
+    if (firstOne != -1) {
+        for (int i = firstOne + 1; i < lastOne; i++) {
+            if (a[i] == -1) {
+                a[i] = 0;
+            }
+        }
+    }
+
+    // All remaining -1 can safely become 0.
+    for (int i = 0; i < n; i++) {
+        if (a[i] == -1) {
+            a[i] = 0;
+        }
+    }
+
+    for (int x : a) {
+        System.out.print(x + " ");
+    }
+    System.out.println();
+}
+    
     // ==================== MAIN ====================
 
     public static void main(String[] args) throws Exception {

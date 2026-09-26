@@ -1,7 +1,7 @@
 import java.io.*;
-import java.util.*;
+import java.util.ArrayList;
 
-public class BMostSociallyDistancedSubsequence {
+public class CodeChef {
 
     static final long MOD = 1_000_000_007L;
     static final long INF = Long.MAX_VALUE / 4;
@@ -299,25 +299,35 @@ public class BMostSociallyDistancedSubsequence {
     static void solve(FastScanner fs) throws Exception {
         // start writing you code
         int n = fs.nextInt();
-        int k = fs.nextInt();
-        String s = fs.next();
+        int[] c = readArray(fs, n);
 
-        int ans=n/k;
+        ArrayList<Integer, ArrayList<Integer>> adj = new ArrayList<>();
 
-        int j =0;
-        int mul=1;
+        adj.remove()
 
-        for(int i=0; i<n; ++i){
-            if(j < mul * (k-1)){
-                if(s.charAt(j)=='0') ans--;
-                mul++;
-                j = mul * k;
-            } else {
-                j++;
-            }
+        for (int i = 0; i < n; i++) {
+            adj.add(new ArrayList<>());
         }
 
-        System.out.println(ans);
+        for (int i = 0; i < n - 1; ++i) {
+            int u = fs.nextInt();
+            int v = fs.nextInt();
+
+            adj.get(u).add(v);
+            adj.get(v).add(u);
+        }
+
+    }
+
+    static void solve2(FastScanner fs) throws Exception {
+        // start writing you code
+        int n = fs.nextInt();
+        int a = fs.nextInt();
+        int b = fs.nextInt();
+        int c = fs.nextInt();
+
+        int cost  = ax + by + cz;
+
     }
 
     // ==================== MAIN ====================
