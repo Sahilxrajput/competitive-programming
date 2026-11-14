@@ -1,0 +1,1 @@
+{"name":"Local: CableWrap","url":"d:\\Coding\\competitive programming\\CableWrap.java","tests":[{"id":1794636047779,"input":"5 5\n..R..\nCCCCC\n..R.C\nCCRCC\n..R..","output":"1"}],"interactive":false,"memoryLimit":1024,"timeLimit":3000,"srcPath":"d:\\Coding\\competitive programming\\CableWrap.java","group":"local","local":true}
